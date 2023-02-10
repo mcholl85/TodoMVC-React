@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Todo Matches DOM Snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class=""
+  >
+    <div
+      class="view"
+    >
+      <input
+        class="toggle"
+        type="checkbox"
+      />
+      <label>
+        a
+      </label>
+      <button
+        class="destroy"
+      />
+    </div>
+    <input
+      class="edit"
+      type="text"
+      value="a"
+    />
+  </li>
+</DocumentFragment>
+`;

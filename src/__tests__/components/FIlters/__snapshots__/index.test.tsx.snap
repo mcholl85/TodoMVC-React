@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Filters Matches DOM Snapshot 1`] = `
+<DocumentFragment>
+  <ul
+    class="filters"
+  >
+    <li>
+      <a
+        aria-current="page"
+        class="selected"
+        href="/"
+      >
+        All
+      </a>
+    </li>
+    <li>
+      <a
+        href="/active"
+      >
+        Active
+      </a>
+    </li>
+    <li>
+      <a
+        href="/completed"
+      >
+        Completed
+      </a>
+    </li>
+  </ul>
+</DocumentFragment>
+`;

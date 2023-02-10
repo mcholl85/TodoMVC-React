@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page Home Matches DOM Snapshot 1`] = `
+<DocumentFragment>
+  <section
+    class="todoapp"
+  >
+    <header
+      class="header"
+    >
+      <h1>
+        todos
+      </h1>
+      <input
+        class="new-todo"
+        placeholder="What needs to be done?"
+        value=""
+      />
+    </header>
+    <section
+      class="main"
+    >
+      <input
+        class="toggle-all"
+        id="toggle-all"
+        type="checkbox"
+      />
+      <label
+        for="toggle-all"
+      >
+        Mark all as complete
+      </label>
+      <ul
+        class="todo-list"
+      />
+    </section>
+  </section>
+  <footer
+    class="info"
+  >
+    <p>
+      Double-click to edit a todo
+    </p>
+    <p>
+      Created by 
+      <a
+        href="http://todomvc.com"
+      >
+        Matthieu CHOLLET
+      </a>
+    </p>
+    <p>
+      Part of 
+      <a
+        href="http://todomvc.com"
+      >
+        TodoMVC
+      </a>
+    </p>
+  </footer>
+</DocumentFragment>
+`;

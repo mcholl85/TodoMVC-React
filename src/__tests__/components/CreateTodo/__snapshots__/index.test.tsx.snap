@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component CreateTodo Matches DOM Snapshot 1`] = `
+<DocumentFragment>
+  <input
+    class="new-todo"
+    placeholder="What needs to be done?"
+    value=""
+  />
+</DocumentFragment>
+`;
