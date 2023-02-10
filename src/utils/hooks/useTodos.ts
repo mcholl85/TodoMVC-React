@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query'
-import { createTodo, deleteTodo, deleteTodos, fetchTodos, updatePartiallyTodo } from '../api/todos'
+import Api from '../api/todos'
 
 export interface TodoType {
   id: string
@@ -11,11 +11,11 @@ export function useTodos(filter: string) {
   const queryClient = useQueryClient()
   const { data: todos }: UseQueryResult<TodoType[]> = useQuery({
     queryKey: ['todos'],
-    queryFn: fetchTodos,
+    queryFn: Api.fetchTodos,
   })
 
   const { mutate: saveTodo } = useMutation({
-    mutationFn: createTodo,
+    mutationFn: Api.createTodo,
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
@@ -36,28 +36,28 @@ export function useTodos(filter: string) {
   const allTodosCompleted = displayedTodos?.every((todo) => todo.completed)
 
   const { mutate: removeTodo } = useMutation({
-    mutationFn: deleteTodo,
+    mutationFn: Api.deleteTodo,
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
   })
 
   const { mutate: setTitle } = useMutation({
-    mutationFn: updatePartiallyTodo,
+    mutationFn: Api.updatePartiallyTodo,
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
   })
 
   const { mutate: setCompleted } = useMutation({
-    mutationFn: updatePartiallyTodo,
+    mutationFn: Api.updatePartiallyTodo,
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
   })
 
   const { mutate: clearCompleted } = useMutation({
-    mutationFn: () => deleteTodos(true),
+    mutationFn: () => Api.deleteTodos(true),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
@@ -65,7 +65,7 @@ export function useTodos(filter: string) {
 
   const changeAllCompletedTodo = (bool: boolean) => {
     todos?.forEach((todo) => {
-      if (todo.completed === bool) setCompleted({ id: todo.id, completed: bool })
+      if (todo.completed !== bool) setCompleted({ id: todo.id, completed: bool })
     })
   }
 

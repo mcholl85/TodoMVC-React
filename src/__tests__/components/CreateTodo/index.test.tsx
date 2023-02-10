@@ -1,7 +1,14 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, renderHook, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { PropsWithChildren } from 'react'
 import CreateTodo from '../../../components/CreateTodo'
 import { useTodos } from '../../../utils/hooks/useTodos'
+
+const queryClient = new QueryClient()
+const wrapper = ({ children }: PropsWithChildren) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+)
 
 describe('Component CreateTodo', () => {
   test('Matches DOM Snapshot', () => {
@@ -23,7 +30,7 @@ describe('Component CreateTodo', () => {
     expect(inputEl).toHaveValue('')
   })
   test('do not create a todo given a empty input', () => {
-    const { result } = renderHook(() => useTodos('all'))
+    const { result } = renderHook(() => useTodos('all'), { wrapper })
 
     render(<CreateTodo saveTodo={result.current.saveTodo} />)
 
