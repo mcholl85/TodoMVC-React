@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Todo from '../../../components/Todo'
@@ -12,27 +13,13 @@ describe('Component Todo', () => {
         setCompleted={() => {}}
         setTitle={() => {}}
         removeTodo={() => {}}
+        isEditing={''}
+        setIsEditing={() => {}}
       />,
     )
     expect(asFragment()).toMatchSnapshot()
   })
-  test('Focus the title input, change the list style given a double click on the list', () => {
-    render(
-      <Todo
-        id={'1'}
-        title={'a'}
-        completed={false}
-        setCompleted={() => {}}
-        setTitle={() => {}}
-        removeTodo={() => {}}
-      />,
-    )
-    const liEl: HTMLLIElement = screen.getByRole('listitem')
 
-    userEvent.dblClick(liEl)
-    expect(screen.getByRole('textbox')).toHaveFocus()
-    expect(liEl).toHaveClass('editing')
-  })
   test.each`
     value
     ${true}
@@ -48,6 +35,8 @@ describe('Component Todo', () => {
         setCompleted={mockSetCompleted}
         setTitle={() => {}}
         removeTodo={() => {}}
+        isEditing={''}
+        setIsEditing={() => {}}
       />,
     )
     const checkboxEl: HTMLInputElement = screen.getByRole('checkbox')
@@ -55,7 +44,7 @@ describe('Component Todo', () => {
     userEvent.click(checkboxEl)
 
     expect(mockSetCompleted).toBeCalledTimes(1)
-    expect(mockSetCompleted).toBeCalledWith('1', !value)
+    expect(mockSetCompleted).toBeCalledWith({ id: '1', completed: !value })
   })
   test('Remove the todo given a click on destroy button', () => {
     const mockRemoveTodo = jest.fn()
@@ -67,6 +56,8 @@ describe('Component Todo', () => {
         setCompleted={() => {}}
         setTitle={() => {}}
         removeTodo={mockRemoveTodo}
+        isEditing={''}
+        setIsEditing={() => {}}
       />,
     )
     const button: HTMLButtonElement = screen.getByRole('button')
@@ -85,6 +76,8 @@ describe('Component Todo', () => {
         setCompleted={() => {}}
         setTitle={mockSetTitle}
         removeTodo={() => {}}
+        isEditing={''}
+        setIsEditing={() => {}}
       />,
     )
     const inputEl = screen.getByRole('textbox')
@@ -92,7 +85,7 @@ describe('Component Todo', () => {
     userEvent.type(inputEl, 'test{enter}')
 
     expect(inputEl).toHaveValue('atest')
-    expect(mockSetTitle).toHaveBeenCalledWith('1', 'atest')
+    expect(mockSetTitle).toHaveBeenCalledWith({ id: '1', title: 'atest' })
     expect(mockSetTitle).toHaveBeenCalledTimes(1)
   })
   test('remove the editing todo title after typing value and invalid with espace', () => {
@@ -105,6 +98,8 @@ describe('Component Todo', () => {
         setCompleted={() => {}}
         setTitle={mockSetTitle}
         removeTodo={() => {}}
+        isEditing={''}
+        setIsEditing={() => {}}
       />,
     )
     const inputEl = screen.getByRole('textbox')
@@ -124,6 +119,8 @@ describe('Component Todo', () => {
         setCompleted={() => {}}
         setTitle={mockSetTitle}
         removeTodo={() => {}}
+        isEditing={''}
+        setIsEditing={() => {}}
       />,
     )
     const inputEl = screen.getByRole('textbox')
@@ -142,6 +139,8 @@ describe('Component Todo', () => {
         setCompleted={() => {}}
         setTitle={() => {}}
         removeTodo={() => {}}
+        isEditing={''}
+        setIsEditing={() => {}}
       />,
     )
     const inputEl = screen.getByRole('textbox')
@@ -162,6 +161,8 @@ describe('Component Todo', () => {
         setCompleted={() => {}}
         setTitle={() => {}}
         removeTodo={mockRemoveTodo}
+        isEditing={''}
+        setIsEditing={() => {}}
       />,
     )
     const inputEl = screen.getByRole('textbox')
@@ -170,41 +171,5 @@ describe('Component Todo', () => {
 
     expect(mockRemoveTodo).toHaveBeenCalledTimes(1)
     expect(mockRemoveTodo).toHaveBeenCalledWith('1')
-  })
-  test('render a list with the class completed when todo is checked', () => {
-    render(
-      <Todo
-        id={'1'}
-        title={'a'}
-        completed={true}
-        setCompleted={() => {}}
-        setTitle={() => {}}
-        removeTodo={() => {}}
-      />,
-    )
-
-    const liEl: HTMLLIElement = screen.getByRole('listitem')
-    const checkboxEl: HTMLInputElement = screen.getByRole('checkbox')
-
-    expect(checkboxEl).toBeChecked()
-    expect(liEl).toHaveClass('completed')
-  })
-  test('do not render a list with the class completed when todo is not checked', () => {
-    render(
-      <Todo
-        id={'1'}
-        title={'a'}
-        completed={false}
-        setCompleted={() => {}}
-        setTitle={() => {}}
-        removeTodo={() => {}}
-      />,
-    )
-
-    const liEl: HTMLLIElement = screen.getByRole('listitem')
-    const checkboxEl: HTMLInputElement = screen.getByRole('checkbox')
-
-    expect(checkboxEl).not.toBeChecked()
-    expect(liEl).not.toHaveClass('completed')
   })
 })

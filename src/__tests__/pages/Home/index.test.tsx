@@ -1,8 +1,21 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import Home from '../../../pages/Home'
 import { useTodos } from '../../../utils/hooks/useTodos'
+
+const completedTodoMock = {
+  id: 'a4ffab12-209b-4007-acc5-9b21119d858d',
+  title: 'hello',
+  completed: true,
+}
+
+const uncompletedTodoMock = {
+  id: '627ccf8e-96cf-4607-80a5-22b01a35c7eb',
+  title: 'test',
+  completed: false,
+}
 
 const mockTodos = [
   {
@@ -10,11 +23,7 @@ const mockTodos = [
     title: 'test',
     completed: false,
   },
-  {
-    id: 'a4ffab12-209b-4007-acc5-9b21119d858d',
-    title: 'hello',
-    completed: true,
-  },
+  { id: 'a4ffab12-209b-4007-acc5-9b21119d858d', title: 'hello', completed: true },
   {
     id: '543aa59f-ed63-49d4-9d83-dbf38586ff46',
     title: 'world',
@@ -121,5 +130,66 @@ describe('Page Home', () => {
     const footer = screen.queryByTestId('footer')
 
     expect(footer).not.toBeInTheDocument()
+  })
+
+  test('render a li element with the class complete given a completed todo', () => {
+    mockUseTodos.mockImplementation(() => ({
+      todos: [completedTodoMock],
+      count: { all: 1 },
+      allTodosCompleted: true,
+      getFilteredTodos: () => {},
+    }))
+
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Home filter='all' />
+      </MemoryRouter>,
+    )
+
+    const li = screen.getByTestId(`list-${completedTodoMock.id}`)
+
+    expect(li).toHaveClass('completed')
+  })
+
+  test('render a li element without the class complete given a completed todo', () => {
+    mockUseTodos.mockImplementation(() => ({
+      todos: [uncompletedTodoMock],
+      count: { all: 1 },
+      allTodosCompleted: true,
+      getFilteredTodos: () => {},
+    }))
+
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Home filter='all' />
+      </MemoryRouter>,
+    )
+
+    const li = screen.getByTestId(`list-${uncompletedTodoMock.id}`)
+
+    expect(li).not.toHaveClass('completed')
+  })
+
+  test('render a li element with the class editing given a double click on list element', () => {
+    mockUseTodos.mockImplementation(() => ({
+      todos: [uncompletedTodoMock],
+      count: { all: 1 },
+      allTodosCompleted: true,
+      getFilteredTodos: () => {},
+    }))
+
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Home filter='all' />
+      </MemoryRouter>,
+    )
+
+    const li = screen.getByTestId(`list-${uncompletedTodoMock.id}`)
+
+    expect(li).not.toHaveClass('editing')
+
+    userEvent.dblClick(li)
+
+    expect(li).toHaveClass('editing')
   })
 })

@@ -42,6 +42,7 @@ export default function Home({ filter }: HomeProps) {
           <ul className='todo-list'>
             {todos?.map((todo) => (
               <li
+                data-testid={`list-${todo.id}`}
                 key={todo.id}
                 onDoubleClick={() => setIsEditing(todo.id)}
                 className={classNames(
