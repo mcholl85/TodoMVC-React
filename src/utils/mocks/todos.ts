@@ -59,3 +59,16 @@ export const mockTodos = [
     completed: false,
   },
 ]
+
+export const mockTodo = {
+  id: '627ccf8e-96cf-4607-80a5-22b01a35c7eb',
+  title: 'test',
+  completed: false,
+  order: 1,
+}
+
+export const mockPartialTodo = {
+  id: '627ccf8e-96cf-4607-80a5-22b01a35c7eb',
+  title: 'test',
+  order: 1,
+}
