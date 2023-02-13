@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://localhost:3000/todos'
+export const BASE_URL = 'http://matthieuchollet.synology.me:3000/todos/'
